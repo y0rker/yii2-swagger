@@ -2,7 +2,7 @@
 
 namespace yii2mod\swagger;
 
-use Swagger\Annotations\Swagger;
+use OpenApi\Annotations\OpenApi;
 use Yii;
 use yii\base\Action;
 use yii\caching\Cache;
@@ -73,16 +73,16 @@ class OpenAPIRenderer extends Action
     /**
      * Scan the filesystem for swagger annotations and build swagger-documentation.
      *
-     * @return Swagger
+     * @return OpenApi
      */
-    protected function getSwaggerDocumentation(): Swagger
+    protected function getSwaggerDocumentation(): OpenApi
     {
         if (!$this->cache instanceof Cache) {
-            return \Swagger\scan($this->scanDir, $this->scanOptions);
+            return \OpenApi\scan($this->scanDir, $this->scanOptions);
         }
 
         return $this->cache->getOrSet($this->cacheKey, function () {
-            return \Swagger\scan($this->scanDir, $this->scanOptions);
+            return \OpenApi\scan($this->scanDir, $this->scanOptions);
         }, $this->cacheDuration);
     }
 
